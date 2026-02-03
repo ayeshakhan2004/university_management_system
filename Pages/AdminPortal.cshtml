@@ -1,0 +1,78 @@
+﻿@page
+@model UniversityProject.Pages.AdminPortalModel
+@{ ViewData["Title"] = "Admin Management"; }
+
+
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mt-4 border-bottom pb-3">
+    <h2 class="text-danger mb-0">🛡️ Admin Management</h2>
+    <a href="/" class="btn btn-outline-dark shadow-sm">🚪 Logout</a>
+</div>
+    @if (!string.IsNullOrEmpty(Model.Msg)) { <div class="alert alert-warning">@Model.Msg</div> }
+
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">Add New Student</div>
+                <div class="card-body">
+                    <form method="post" asp-page-handler="AddStudent">
+                        <div class="row g-2 mb-2">
+                            <div class="col"><input name="f" class="form-control" placeholder="First Name" required></div>
+                            <div class="col"><input name="l" class="form-control" placeholder="Last Name" required></div>
+                        </div>
+                        <input name="p" class="form-control mb-2" placeholder="Phone" required>
+                        <input name="a" class="form-control mb-2" placeholder="Address" required>
+                        <input name="d" type="number" class="form-control mb-2" placeholder="Dept ID" required>
+                        <button class="btn btn-primary w-100">Add Student</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-success text-white">Add New Teacher</div>
+                <div class="card-body">
+                    <form method="post" asp-page-handler="AddTeacher">
+                        <input name="f" class="form-control mb-2" placeholder="Full Name" required>
+                        <input name="s" class="form-control mb-2" placeholder="Specialization (AI, Math...)" required>
+                        <div class="row g-2 mb-2">
+                            <div class="col"><input name="h" type="date" class="form-control" required></div>
+                            <div class="col"><input name="d" type="number" class="form-control" placeholder="Dept ID" required></div>
+                        </div>
+                        <button class="btn btn-success w-100">Add Teacher</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h4>📋 Students</h4>
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr><th>ID</th><th>Name</th><th>Phone</th><th>Address</th><th>Action</th></tr>
+        </thead>
+        <tbody>
+            @foreach (var s in Model.StudentList) {
+                <tr><td>@s.Id</td><td>@s.Name</td><td>@s.Extra</td><td>@s.Location</td>
+                    <td><form method="post" asp-page-handler="Delete" asp-route-id="@s.Id" asp-route-type="student"><button class="btn btn-danger btn-sm">Delete</button></form></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <h4 class="mt-4">📋 Teachers</h4>
+    <table class="table table-bordered table-striped">
+        <thead class="table-secondary">
+            <tr><th>ID</th><th>Name</th><th>Specialization</th><th>Dept ID</th><th>Action</th></tr>
+        </thead>
+        <tbody>
+            @foreach (var t in Model.TeacherList) {
+                <tr><td>@t.Id</td><td>@t.Name</td><td>@t.Extra</td><td>@t.Location</td>
+                    <td><form method="post" asp-page-handler="Delete" asp-route-id="@t.Id" asp-route-type="teacher"><button class="btn btn-danger btn-sm">Delete</button></form></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

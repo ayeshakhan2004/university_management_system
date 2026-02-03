@@ -1,0 +1,37 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="d-flex justify-content-center align-items-center" style="height: 80vh;">
+    <div class="card shadow-lg" style="width: 400px;">
+        <div class="card-header bg-primary text-white text-center">
+            <h3>🏛️ UMS Login</h3>
+            <small>University Management System</small>
+        </div>
+        <div class="card-body p-4">
+            @if (ViewData["Message"] != null)
+            {
+                <div class="alert alert-danger text-center">
+                    @ViewData["Message"]
+                </div>
+            }
+
+            <form method="post">
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Username</label>
+                    <input type="text" name="username" class="form-control" placeholder="e.g. bilal.admin" required />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Password</label>
+                    <input type="password" name="password" class="form-control" placeholder="••••••••" required />
+                </div>
+                <button type="submit" class="btn btn-primary w-100">🔒 Secure Login</button>
+            </form>
+        </div>
+        <div class="card-footer text-muted text-center">
+            <small>Restricted Access - Authorized Personnel Only</small>
+        </div>
+    </div>
+</div>

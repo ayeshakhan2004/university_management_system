@@ -1,0 +1,83 @@
+@page
+@model UniversityProject.Pages.TeacherPortalModel
+@{
+    ViewData["Title"] = "Teacher Dashboard";
+}
+
+<div class="container mt-4">
+    <div class="card mb-4 border-primary">
+        <div class="card-body bg-light d-flex justify-content-between align-items-center">
+            
+            <div>
+                <h2 class="text-primary mb-0">👨‍🏫 Instructor Dashboard</h2>
+                <p class="mb-0 text-muted">Logged in as: <strong>@Model.TeacherName</strong></p>
+            </div> 
+            <a href="/" class="btn btn-outline-dark shadow-sm">🚪 Logout</a>
+            
+        </div>
+    </div>
+</div>
+    @if (!string.IsNullOrEmpty(Model.ErrorMessage)) { <div class="alert alert-danger">@Model.ErrorMessage</div> }
+    @if (!string.IsNullOrEmpty(Model.SuccessMessage)) { <div class="alert alert-success">@Model.SuccessMessage</div> }
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-dark text-white"><h5 class="mb-0">📚 My Courses</h5></div>
+                <ul class="list-group list-group-flush">
+                    @foreach (var classItem in Model.MySchedule)
+                    {
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span class="fw-bold">@classItem.Course</span>
+                            <span class="badge bg-secondary">@classItem.Semester</span>
+                        </li>
+                    }
+                    @if(Model.MySchedule.Count == 0) { <li class="list-group-item">No courses found.</li> }
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white"><h5 class="mb-0">🎓 Student Grades</h5></div>
+                <div class="card-body p-0">
+                    <table class="table table-striped mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Student</th>
+                                <th>Course</th>
+                                <th>Grade</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var s in Model.MyStudents)
+                            {
+                                <tr>
+                                    <td>@s.Name</td>
+                                    <td><span class="badge bg-info text-dark">@s.Course</span></td>
+                                    <td>
+                                        <b class="@(s.Grade == "F" ? "text-danger" : "text-success")">
+                                            @(string.IsNullOrEmpty(s.Grade) ? "Pending" : s.Grade)
+                                        </b>
+                                    </td>
+                                    <td>
+                                        <form method="post" asp-page-handler="UpdateGrade" class="d-flex gap-1">
+                                            <input type="hidden" name="enrollmentId" value="@s.EnrollmentId" />
+                                            <select name="newGrade" class="form-select form-select-sm" style="width:70px;">
+                                                <option value="A">A</option><option value="B">B</option>
+                                                <option value="C">C</option><option value="D">D</option>
+                                                <option value="F">F</option>
+                                            </select>
+                                            <button class="btn btn-sm btn-outline-primary">Save</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
