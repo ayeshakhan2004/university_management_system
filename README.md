@@ -5,7 +5,7 @@ A full-stack web application designed to manage university operations. It featur
 ## 🚀 Key Features
 
 ### 👨‍💼 Admin Portal
-* **Manage Users:** Add new teachers and delete student/teacher records.
+* **Manage Users:** Add new teachers and delete student/teacher records. 
 * **Audit Logs:** Track system changes (who changed what and when).
 * **Dashboard:** Overview of active students and faculty.
 
